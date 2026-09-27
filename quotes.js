@@ -1,11 +1,6 @@
 /** @type {{ quote: string, author: string, likedBy: string[] }[]} */
 export const quotes = [
   {
-    quote: "Little by little, a little becomes a lot.",
-    author: "Traditional proverb",
-    likedBy: [],
-  },
-  {
     quote: "Be yourself; everyone else is already taken.",
     author: "Oscar Wilde",
     likedBy: [],
