@@ -1,36 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { quotes as initialQuotes } from "@/quotes";
+import Link from "next/link";
+import { useQuotes } from "@/context/QuotesContext";
 import { Card } from "@/components/Card";
 import { Button } from "@/components/Button";
 import { LikeButton } from "@/components/LikeButton";
 import { QuoteText } from "@/components/QuoteText";
 import { AuthorText } from "@/components/AuthorText";
 
-const userId = "user-akan";
-
 export default function Home() {
-  const [quotes, setQuotes] = useState(initialQuotes);
+  const { quotes, userId, toggleLike } = useQuotes();
   const [index, setIndex] = useState(0);
   const currentQuote = quotes[index];
   const isLiked = currentQuote.likedBy.includes(userId);
-
-  function handleLike() {
-    setQuotes((previousQuotes) =>
-      previousQuotes.map((quote, quoteIndex) => {
-        if (quoteIndex !== index) return quote;
-
-        const alreadyLiked = quote.likedBy.includes(userId);
-        return {
-          ...quote,
-          likedBy: alreadyLiked
-            ? quote.likedBy.filter((id) => id !== userId)
-            : [...quote.likedBy, userId],
-        };
-      })
-    );
-  }
 
   function handlePrevious() {
     setIndex((previousIndex) => (previousIndex - 1 + quotes.length) % quotes.length);
@@ -47,6 +30,9 @@ export default function Home() {
           <p className="text-xs font-semibold tracking-[0.25em] text-violet-300">A MOMENT OF INSPIRATION</p>
           <h1 className="mt-4 text-4xl font-semibold tracking-tight text-white sm:text-5xl">Random Quote<span className="text-violet-400">.</span></h1>
           <p className="mt-4 text-slate-300">A little perspective for your day.</p>
+          <Link href="/user/quotes/liked" className="mt-4 inline-block text-violet-300 underline underline-offset-4">
+            Liked quotes
+          </Link>
         </header>
 
         <Card className={isLiked ? "border-rose-400 bg-rose-50" : "border-white/20 bg-slate-50"}>
@@ -58,7 +44,7 @@ export default function Home() {
           </blockquote>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button onClick={handlePrevious}>Previous</Button>
-            <LikeButton isLiked={isLiked} onClick={handleLike} />
+            <LikeButton isLiked={isLiked} onClick={() => toggleLike(index)} />
             <Button onClick={handleNext}>Next</Button>
           </div>
         </Card>
