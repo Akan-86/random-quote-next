@@ -4,6 +4,7 @@ import { useState } from "react";
 import { quotes as initialQuotes } from "@/quotes";
 import { Card } from "@/components/Card";
 import { Button } from "@/components/Button";
+import { LikeButton } from "@/components/LikeButton";
 import { QuoteText } from "@/components/QuoteText";
 import { AuthorText } from "@/components/AuthorText";
 
@@ -48,7 +49,7 @@ export default function Home() {
           <p className="mt-4 text-slate-300">A little perspective for your day.</p>
         </header>
 
-        <Card>
+        <Card className={isLiked ? "border-rose-400 bg-rose-50" : "border-white/20 bg-slate-50"}>
           <blockquote aria-live="polite">
             <span aria-hidden="true" className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-violet-100 font-serif text-4xl text-violet-700">“</span>
             <QuoteText>{currentQuote.quote}</QuoteText>
@@ -57,9 +58,7 @@ export default function Home() {
           </blockquote>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button onClick={handlePrevious}>Previous</Button>
-            <Button onClick={handleLike} aria-pressed={isLiked}>
-              {isLiked ? "Liked" : "Like"}
-            </Button>
+            <LikeButton isLiked={isLiked} onClick={handleLike} />
             <Button onClick={handleNext}>Next</Button>
           </div>
         </Card>
