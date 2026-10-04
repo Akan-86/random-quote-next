@@ -1,11 +1,10 @@
-export function Button({ children, className = "", type = "button", ...props }) {
+import { Button as ShadcnButton } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
+export function Button({ children, className = "", type = "button", variant = "outline", ...props }) {
   return (
-    <button
-      type={type}
-      className={`rounded-lg bg-slate-200 px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-slate-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-700 ${className}`}
-      {...props}
-    >
+    <ShadcnButton type={type} variant={variant} className={cn("min-h-11 px-4", className)} {...props}>
       {children}
-    </button>
+    </ShadcnButton>
   );
 }
