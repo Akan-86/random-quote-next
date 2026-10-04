@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { Heart } from "lucide-react";
 import { useQuotes } from "@/context/QuotesContext";
-import { Card } from "@/components/Card";
+import { QuoteCard } from "@/components/QuoteCard";
+import { AppButton } from "@/components/AppButton";
 import { QuoteText } from "@/components/QuoteText";
 import { AuthorText } from "@/components/AuthorText";
 import { LikeButton } from "@/components/LikeButton";
@@ -14,31 +16,33 @@ export default function LikedQuotes() {
     .filter((quote) => quote.likedBy.includes(userId));
 
   return (
-    <main className="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-indigo-950 px-6 py-12">
-      <div className="mx-auto w-full max-w-xl">
-        <h1 className="text-3xl font-semibold text-white">Liked quotes</h1>
-        <Link href="/" className="mt-4 inline-block text-violet-300 underline underline-offset-4">
-          Back to quotes
-        </Link>
-        <p aria-live="polite" className="my-6 text-slate-300">
-          {likedQuotes.length === 0
-            ? "No liked quotes yet. Like a quote on the main page to see it here."
-            : `${likedQuotes.length} liked ${likedQuotes.length === 1 ? "quote" : "quotes"}`}
-        </p>
-        <div className="space-y-6">
+    <main id="main-content" tabIndex={-1} className="mx-auto min-h-[70vh] max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
+      <h1 className="font-serif text-4xl tracking-tight sm:text-5xl">Words to come back to.</h1>
+      <p role="status" className="mb-10 mt-4 text-muted-foreground">{likedQuotes.length} liked {likedQuotes.length === 1 ? "quote" : "quotes"}</p>
+      {likedQuotes.length === 0 ? (
+        <QuoteCard className="items-center border-dashed py-16 text-center">
+          <Heart aria-hidden="true" className="mb-5 size-9 text-primary" />
+          <h2 className="text-xl font-semibold">Your collection starts here</h2>
+          <p className="mb-6 mt-3 max-w-sm text-muted-foreground">Like a quote on the Discover page and find it here. A few words can make a difference.</p>
+          <AppButton asChild variant="default"><Link href="/">Discover quotes</Link></AppButton>
+        </QuoteCard>
+      ) : (
+        <ul className="grid gap-6 md:grid-cols-2">
           {likedQuotes.map((quote) => (
-            <Card key={quote.index} className="border-rose-400 bg-rose-50">
-              <blockquote>
-                <QuoteText>{quote.quote}</QuoteText>
-                <AuthorText>{quote.author}</AuthorText>
-              </blockquote>
-              <div className="mt-6">
-                <LikeButton isLiked={true} onClick={() => toggleLike(quote.index)} />
-              </div>
-            </Card>
+            <li key={quote.index}>
+              <QuoteCard isLiked className="h-full">
+                <blockquote className="flex-1">
+                  <QuoteText>{quote.quote}</QuoteText>
+                  <AuthorText>{quote.author}</AuthorText>
+                </blockquote>
+                <div className="mt-6 border-t pt-6">
+                  <LikeButton isLiked={true} onClick={() => toggleLike(quote.index)} />
+                </div>
+              </QuoteCard>
+            </li>
           ))}
-        </div>
-      </div>
+        </ul>
+      )}
     </main>
   );
 }

@@ -1,17 +1,17 @@
+import { Heart } from "lucide-react";
+import { AppButton } from "@/components/AppButton";
+
 export function LikeButton({ isLiked, onClick }) {
   return (
-    <button
-      type="button"
+    <AppButton
       onClick={onClick}
       aria-pressed={isLiked}
-      className={`inline-flex items-center gap-2 rounded-full border-2 px-5 py-2 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-rose-700 ${
-        isLiked
-          ? "border-rose-700 bg-rose-700 text-white hover:bg-rose-800"
-          : "border-rose-600 bg-white text-rose-700 hover:bg-rose-100"
-      }`}
+      className={`rounded-full border-2 px-5 ${isLiked
+        ? "border-rose-700 bg-rose-700 text-white hover:bg-rose-800 hover:text-white dark:border-rose-300 dark:bg-rose-300 dark:text-rose-950 dark:hover:bg-rose-200"
+        : "border-rose-600 text-rose-700 hover:bg-rose-50 hover:text-rose-800 dark:border-rose-400 dark:text-rose-200 dark:hover:bg-rose-950 dark:hover:text-rose-100"}`}
     >
-      <span aria-hidden="true">{isLiked ? "♥" : "♡"}</span>
+      <Heart aria-hidden="true" className={isLiked ? "fill-current" : ""} />
       {isLiked ? "Liked" : "Like"}
-    </button>
+    </AppButton>
   );
 }
