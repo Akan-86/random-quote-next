@@ -1,9 +1,9 @@
 import { Heart } from "lucide-react";
-import { Button } from "@/components/Button";
+import { AppButton } from "@/components/AppButton";
 
 export function LikeButton({ isLiked, onClick }) {
   return (
-    <Button
+    <AppButton
       onClick={onClick}
       aria-pressed={isLiked}
       className={`rounded-full border-2 px-5 ${isLiked
@@ -12,6 +12,6 @@ export function LikeButton({ isLiked, onClick }) {
     >
       <Heart aria-hidden="true" className={isLiked ? "fill-current" : ""} />
       {isLiked ? "Liked" : "Like"}
-    </Button>
+    </AppButton>
   );
 }

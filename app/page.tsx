@@ -3,8 +3,8 @@
 import { useState } from "react";
 import { ArrowLeft, ArrowRight, Quote } from "lucide-react";
 import { useQuotes } from "@/context/QuotesContext";
-import { Card } from "@/components/Card";
-import { Button } from "@/components/Button";
+import { QuoteCard } from "@/components/QuoteCard";
+import { AppButton } from "@/components/AppButton";
 import { LikeButton } from "@/components/LikeButton";
 import { QuoteText } from "@/components/QuoteText";
 import { AuthorText } from "@/components/AuthorText";
@@ -23,7 +23,7 @@ export default function Home() {
         <h1 className="max-w-md font-serif text-4xl leading-tight tracking-tight sm:text-5xl lg:text-6xl">A little perspective.<br /><span className="text-primary">A brighter day.</span></h1>
         <p className="mt-6 max-w-sm text-base leading-relaxed text-muted-foreground">Take a breath, discover a thought, and save the words that stay with you.</p>
       </div>
-      <Card isLiked={isLiked}>
+      <QuoteCard isLiked={isLiked}>
         <Quote aria-hidden="true" className="mb-6 size-9 text-primary" />
         <div aria-live="polite" aria-atomic="true">
           <blockquote>
@@ -34,12 +34,12 @@ export default function Home() {
         </div>
         <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t pt-6">
           <div className="flex gap-2">
-            <Button onClick={() => setIndex((previous) => (previous - 1 + quotes.length) % quotes.length)}><ArrowLeft aria-hidden="true" />Previous</Button>
-            <Button onClick={() => setIndex((previous) => (previous + 1) % quotes.length)}>Next<ArrowRight aria-hidden="true" /></Button>
+            <AppButton onClick={() => setIndex((previous) => (previous - 1 + quotes.length) % quotes.length)}><ArrowLeft aria-hidden="true" />Previous</AppButton>
+            <AppButton onClick={() => setIndex((previous) => (previous + 1) % quotes.length)}>Next<ArrowRight aria-hidden="true" /></AppButton>
           </div>
           <LikeButton isLiked={isLiked} onClick={() => toggleLike(index)} />
         </div>
-      </Card>
+      </QuoteCard>
     </main>
   );
 }
