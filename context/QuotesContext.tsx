@@ -1,17 +1,22 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
-import { quotes as initialQuotes } from "@/quotes";
+import { createContext, useContext, useState, type ReactNode } from "react";
+import { quotes as initialQuotes, type Quote } from "@/quotes";
 
 const userId = "user-akan";
 
-/** @type {import("react").Context<{ quotes: typeof initialQuotes, userId: string, toggleLike: (quoteIndex: number) => void } | null>} */
-const QuotesContext = createContext(null);
+type QuotesContextValue = {
+  quotes: Quote[];
+  userId: string;
+  toggleLike: (quoteIndex: number) => void;
+};
 
-export function QuotesProvider({ children }) {
-  const [quotes, setQuotes] = useState(initialQuotes);
+const QuotesContext = createContext<QuotesContextValue | null>(null);
 
-  function toggleLike(quoteIndex) {
+export function QuotesProvider({ children }: { children: ReactNode }) {
+  const [quotes, setQuotes] = useState<Quote[]>(initialQuotes);
+
+  function toggleLike(quoteIndex: number) {
     setQuotes((previousQuotes) =>
       previousQuotes.map((quote, index) => {
         if (index !== quoteIndex) return quote;
