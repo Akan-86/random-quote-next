@@ -1,7 +1,12 @@
 import { Heart } from "lucide-react";
 import { AppButton } from "@/components/AppButton";
 
-export function LikeButton({ isLiked, onClick }) {
+type LikeButtonProps = {
+  isLiked: boolean;
+  onClick: () => void;
+};
+
+export function LikeButton({ isLiked, onClick }: LikeButtonProps) {
   return (
     <AppButton
       onClick={onClick}
