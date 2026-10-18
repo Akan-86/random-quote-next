@@ -1,5 +1,6 @@
 "use client";
 
+import { PageTitle, SectionTitle, BodyText } from "@/components/Typography";
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import { useQuotes } from "@/context/QuotesContext";
@@ -17,13 +18,13 @@ export default function LikedQuotes() {
 
   return (
     <main id="main-content" tabIndex={-1} className="mx-auto min-h-[70vh] max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
-      <h1 className="font-serif text-4xl tracking-tight sm:text-5xl">Words to come back to.</h1>
-      <p role="status" className="mb-10 mt-4 text-muted-foreground">{likedQuotes.length} liked {likedQuotes.length === 1 ? "quote" : "quotes"}</p>
+      <PageTitle>Words to come back to.</PageTitle>
+      <BodyText role="status" className="mb-10 mt-4">{likedQuotes.length} liked {likedQuotes.length === 1 ? "quote" : "quotes"}</BodyText>
       {likedQuotes.length === 0 ? (
         <QuoteCard className="items-center border-dashed py-16 text-center">
           <Heart aria-hidden="true" className="mb-5 size-9 text-primary" />
-          <h2 className="text-xl font-semibold">Your collection starts here</h2>
-          <p className="mb-6 mt-3 max-w-sm text-muted-foreground">Like a quote on the Discover page and find it here. A few words can make a difference.</p>
+          <SectionTitle>Your collection starts here</SectionTitle>
+          <BodyText className="mb-6 mt-3 max-w-sm">Like a quote on the Discover page and find it here. A few words can make a difference.</BodyText>
           <AppButton asChild variant="default"><Link href="/">Discover quotes</Link></AppButton>
         </QuoteCard>
       ) : (

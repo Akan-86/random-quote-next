@@ -14,9 +14,11 @@ export function SiteHeader() {
           <Quote aria-hidden="true" className="size-6 text-primary" /> Random Quote
         </Link>
         <ThemeToggle />
-        <nav aria-label="Main navigation" className="flex w-full gap-6 text-sm sm:w-auto">
-          <Link href="/" aria-current={pathname === "/" ? "page" : undefined} className="inline-flex min-h-11 items-center border-b-2 border-transparent font-medium hover:text-primary aria-[current=page]:border-primary aria-[current=page]:text-primary">Discover</Link>
-          <Link href="/user/quotes/liked" aria-current={pathname === "/user/quotes/liked" ? "page" : undefined} className="inline-flex min-h-11 items-center border-b-2 border-transparent font-medium hover:text-primary aria-[current=page]:border-primary aria-[current=page]:text-primary">Liked quotes</Link>
+        <nav aria-label="Main navigation" className="w-full text-sm sm:w-auto">
+          <ul className="flex flex-wrap gap-6">
+            <li><Link href="/" aria-current={pathname === "/" ? "page" : undefined} className="inline-flex min-h-11 items-center border-b-2 border-transparent font-medium hover:text-primary aria-[current=page]:border-primary aria-[current=page]:text-primary">Discover</Link></li>
+            <li><Link href="/user/quotes/liked" aria-current={pathname === "/user/quotes/liked" ? "page" : undefined} className="inline-flex min-h-11 items-center border-b-2 border-transparent font-medium hover:text-primary aria-[current=page]:border-primary aria-[current=page]:text-primary">Liked quotes</Link></li>
+          </ul>
         </nav>
       </div>
     </header>
