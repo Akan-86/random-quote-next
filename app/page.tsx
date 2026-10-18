@@ -12,10 +12,10 @@ import { AuthorText } from "@/components/AuthorText";
 import { Badge } from "@/components/ui/badge";
 
 export default function Home() {
-  const { quotes, userId, toggleLike } = useQuotes();
+  const { quotes, userId, isLoading, toggleLike } = useQuotes();
   const [index, setIndex] = useState(0);
   const currentQuote = quotes[index];
-  const isLiked = currentQuote.likedBy.includes(userId);
+  const isLiked = !!userId && currentQuote.likedBy.includes(userId);
 
   return (
     <main id="main-content" tabIndex={-1} className="mx-auto grid min-h-[70vh] max-w-6xl items-center gap-10 px-5 py-12 sm:px-8 sm:py-20 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16">
@@ -38,7 +38,11 @@ export default function Home() {
             <AppButton onClick={() => setIndex((previous) => (previous - 1 + quotes.length) % quotes.length)}><ArrowLeft aria-hidden="true" />Previous</AppButton>
             <AppButton onClick={() => setIndex((previous) => (previous + 1) % quotes.length)}>Next<ArrowRight aria-hidden="true" /></AppButton>
           </div>
-          <LikeButton isLiked={isLiked} onClick={() => toggleLike(index)} />
+          {isLoading ? <BodyText role="status">Loading account…</BodyText> : userId ? (
+            <LikeButton isLiked={isLiked} onClick={() => toggleLike(index)} />
+          ) : (
+            <AppButton asChild><a href="/auth/login">Log in to like</a></AppButton>
+          )}
         </div>
       </QuoteCard>
     </main>
