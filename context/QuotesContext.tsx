@@ -1,38 +1,32 @@
 "use client";
 
 import { createContext, useContext, useState, type ReactNode } from "react";
+import { toggleQuoteLike } from "@/lib/quote-likes";
+import { useUser } from "@auth0/nextjs-auth0";
 import { quotes as initialQuotes, type Quote } from "@/quotes";
 
-const userId = "user-akan";
 
 type QuotesContextValue = {
   quotes: Quote[];
-  userId: string;
+  userId: string | undefined;
+  isLoading: boolean;
   toggleLike: (quoteIndex: number) => void;
 };
 
 const QuotesContext = createContext<QuotesContextValue | null>(null);
 
 export function QuotesProvider({ children }: { children: ReactNode }) {
+  const { user, isLoading } = useUser();
+  const userId = user?.sub;
   const [quotes, setQuotes] = useState<Quote[]>(initialQuotes);
 
   function toggleLike(quoteIndex: number) {
-    setQuotes((previousQuotes) =>
-      previousQuotes.map((quote, index) => {
-        if (index !== quoteIndex) return quote;
-
-        return {
-          ...quote,
-          likedBy: quote.likedBy.includes(userId)
-            ? quote.likedBy.filter((id) => id !== userId)
-            : [...quote.likedBy, userId],
-        };
-      })
-    );
+    if (!userId || isLoading) return;
+    setQuotes((previousQuotes) => toggleQuoteLike(previousQuotes, quoteIndex, userId));
   }
 
   return (
-    <QuotesContext.Provider value={{ quotes, userId, toggleLike }}>
+    <QuotesContext.Provider value={{ quotes, userId, isLoading, toggleLike }}>
       {children}
     </QuotesContext.Provider>
   );
