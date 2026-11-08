@@ -1,8 +1,12 @@
 export type Quote = {
+  id?: string;
+  createdBy?: string;
   quote: string;
   author: string;
   likedBy: string[];
 };
+
+export type StoredQuote = Quote & { id: string };
 
 export const quotes: Quote[] = [
   {

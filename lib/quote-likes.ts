@@ -1,6 +1,6 @@
 import type { Quote } from "@/quotes";
 
-export function toggleQuoteLike(quotes: Quote[], quoteIndex: number, userId?: string): Quote[] {
+export function toggleQuoteLike<T extends Quote>(quotes: T[], quoteIndex: number, userId?: string): T[] {
   if (!userId) return quotes;
 
   return quotes.map((quote, index) => {
