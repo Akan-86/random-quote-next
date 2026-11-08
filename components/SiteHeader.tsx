@@ -12,7 +12,7 @@ export function SiteHeader() {
   const pathname = usePathname();
   const { user, isLoading } = useUser();
   const links = user
-    ? [{ href: "/", label: "Discover" }, { href: "/user/quotes/liked", label: "Liked quotes" }, { href: "/user/profile", label: "Profile" }]
+    ? [{ href: "/", label: "Discover" }, { href: "/user/quotes/liked", label: "Liked quotes" }, { href: "/user/quotes/mine", label: "My quotes" }, { href: "/user/quotes/new", label: "Create quote" }, { href: "/user/profile", label: "Profile" }]
     : [{ href: "/", label: "Discover" }];
 
   return (
