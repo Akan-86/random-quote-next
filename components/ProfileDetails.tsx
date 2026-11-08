@@ -1,13 +1,15 @@
-import { redirect } from "next/navigation";
-import { auth0 } from "@/lib/auth0";
+"use client";
+
+import { useUser } from "@auth0/nextjs-auth0";
 import { QuoteCard } from "@/components/QuoteCard";
-import { PageTitle, BodyText } from "@/components/Typography";
+import { BodyText, PageTitle } from "@/components/Typography";
 
-export default async function ProfilePage() {
-  const session = await auth0.getSession();
-  if (!session) redirect("/auth/login?returnTo=/user/profile");
+export function ProfileDetails() {
+  const { user, isLoading } = useUser();
+  if (isLoading || !user) {
+    return <main id="main-content" className="mx-auto max-w-3xl px-5 py-12"><BodyText role="status">Loading your profile…</BodyText></main>;
+  }
 
-  const { user } = session;
   return (
     <main id="main-content" tabIndex={-1} className="mx-auto min-h-[70vh] max-w-3xl px-5 py-12 sm:px-8">
       <PageTitle>Your profile</PageTitle>
