@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, type ReactNode } from "react";
 import { useUser } from "@auth0/nextjs-auth0";
-import { quotes as initialQuotes, type StoredQuote } from "@/quotes";
+import { quotes as initialQuotes, type StoredQuote, type QuoteCategory } from "@/quotes";
 import { toggleQuoteLike } from "@/lib/quote-likes";
 
 type QuoteContextValue = {
@@ -10,8 +10,8 @@ type QuoteContextValue = {
   userId: string | undefined;
   isLoading: boolean;
   toggleLike: (quoteIndex: number) => void;
-  addQuote: (quote: string, author: string) => string | null;
-  updateQuote: (quoteId: string, quote: string, author: string) => boolean;
+  addQuote: (quote: string, author: string, category?: QuoteCategory) => string | null;
+  updateQuote: (quoteId: string, quote: string, author: string, category?: QuoteCategory) => boolean;
 };
 
 const QuotesContext = createContext<QuoteContextValue | null>(null);
@@ -27,19 +27,19 @@ export function QuotesProvider({ children }: { children: ReactNode }) {
     setQuotes((previous) => toggleQuoteLike(previous, quoteIndex, userId));
   }
 
-  function addQuote(quote: string, author: string) {
+  function addQuote(quote: string, author: string, category?: QuoteCategory) {
     if (!userId || isLoading) return null;
     const id = crypto.randomUUID();
-    setQuotes((previous) => [{ id, quote, author, likedBy: [], createdBy: userId }, ...previous]);
+    setQuotes((previous) => [{ id, quote, author, ...(category ? { category } : {}), likedBy: [], createdBy: userId }, ...previous]);
     return id;
   }
 
-  function updateQuote(quoteId: string, quote: string, author: string) {
+  function updateQuote(quoteId: string, quote: string, author: string, category?: QuoteCategory) {
     if (!userId || isLoading) return false;
     const existing = quotes.find((item) => item.id === quoteId);
     if (!existing || existing.createdBy !== userId) return false;
     setQuotes((previous) => previous.map((item) =>
-      item.id === quoteId && item.createdBy === userId ? { ...item, quote, author } : item
+      item.id === quoteId && item.createdBy === userId ? { ...item, quote, author, category: category || undefined } : item
     ));
     return true;
   }

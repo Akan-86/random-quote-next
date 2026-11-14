@@ -7,6 +7,7 @@ import { AuthorText } from "@/components/AuthorText";
 import { QuoteCard } from "@/components/QuoteCard";
 import { BodyText, PageTitle } from "@/components/Typography";
 import { QuoteText } from "@/components/QuoteText";
+import { CategoryBadge } from "@/components/CategoryBadge";
 
 export function MyQuotes() {
   const { quotes, userId } = useQuotes();
@@ -28,7 +29,7 @@ export function MyQuotes() {
           {myQuotes.map((quote) => (
             <li key={quote.id}>
               <QuoteCard className="h-full">
-                <blockquote className="flex-1"><QuoteText>{quote.quote}</QuoteText><AuthorText>{quote.author}</AuthorText></blockquote>
+                <blockquote className="flex-1"><QuoteText>{quote.quote}</QuoteText><AuthorText>{quote.author}</AuthorText><CategoryBadge category={quote.category} /></blockquote>
                 <div className="border-t px-6 pt-5"><AppButton asChild><Link href={`/user/quotes/${encodeURIComponent(quote.id)}/edit`}>Edit quote</Link></AppButton></div>
               </QuoteCard>
             </li>

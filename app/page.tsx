@@ -10,6 +10,7 @@ import { LikeButton } from "@/components/LikeButton";
 import { QuoteText } from "@/components/QuoteText";
 import { AuthorText } from "@/components/AuthorText";
 import { Badge } from "@/components/ui/badge";
+import { CategoryBadge } from "@/components/CategoryBadge";
 
 export default function Home() {
   const { quotes, userId, isLoading, toggleLike } = useQuotes();
@@ -30,6 +31,7 @@ export default function Home() {
           <blockquote>
             <QuoteText>{currentQuote.quote}</QuoteText>
             <AuthorText>{currentQuote.author}</AuthorText>
+            <CategoryBadge category={currentQuote.category} />
           </blockquote>
           <Caption className="mt-8">Quote {index + 1} of {quotes.length}</Caption>
         </div>
