@@ -9,6 +9,7 @@ import { AppButton } from "@/components/AppButton";
 import { QuoteText } from "@/components/QuoteText";
 import { AuthorText } from "@/components/AuthorText";
 import { LikeButton } from "@/components/LikeButton";
+import { CategoryBadge } from "@/components/CategoryBadge";
 
 export default function LikedQuotes() {
   const { quotes, userId, toggleLike } = useQuotes();
@@ -35,6 +36,7 @@ export default function LikedQuotes() {
                 <blockquote className="flex-1">
                   <QuoteText>{quote.quote}</QuoteText>
                   <AuthorText>{quote.author}</AuthorText>
+                  <CategoryBadge category={quote.category} />
                 </blockquote>
                 <div className="mt-6 border-t pt-6">
                   <LikeButton isLiked={true} onClick={() => toggleLike(quote.index)} />

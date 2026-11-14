@@ -1,8 +1,13 @@
+export const quoteCategories = ["Inspiration", "Motivation", "Life", "Success", "Wisdom"] as const;
+
+export type QuoteCategory = (typeof quoteCategories)[number];
+
 export type Quote = {
   id?: string;
   createdBy?: string;
   quote: string;
   author: string;
+  category?: QuoteCategory;
   likedBy: string[];
 };
 
